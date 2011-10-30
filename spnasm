@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+import os
+import sys
+from optparse import OptionParser
+
+class VBoxExecute:
+    def __init__(self, vm_name, win_user, win_pw):
+        self.vm_name = vm_name
+        self.win_user = win_user
+        self.win_pw = win_pw
+
+    def execute(self, exe_path, arguments=[]):
+        arg_string = ' '.join(arguments)
+        format_args = (self.vm_name, exe_path, self.win_user, self.win_pw, arg_string)
+        cmd = 'VBoxManage guestcontrol "%s" execute --image "%s" --username %s --password %s --wait-stdout -- %s' % format_args
+        os.system(cmd)
+
+
+def unix_to_win_path(path, unix_prefix, win_prefix):
+    return path.replace(unix_prefix, win_prefix, 1).replace('/', r'\\')
+
+
+def extract_options():
+    usage = "usage: %prog [OPTIONS] PROGRAM.SPN"
+    parser = OptionParser(usage)
+
+    parser.add_option('-v', '--vm', dest='vm_name', action='store', type='string',
+                      help='Name of Windows guest virtual machine (see "VBoxManage list vms")')
+    parser.add_option('-u', '--user', dest='win_user', action='store', type='string',
+                      help='Windows user name')
+    parser.add_option('-p', '--pw', dest='win_pw', action='store', type='string',
+                      help='Windows password')
+    parser.add_option('-a', '--autoit', dest='autoit_exec', action='store', type='string',
+                      help='Path to AutoIt3 executable on Windows guest')
+    parser.add_option('-s', '--au3script', dest='autoit_script', action='store', type='string',
+                      help='Path to spn.au3 AutoIt3 script on Windows guest')
+    parser.add_option('-w', '--winpath', dest='win_base_path', action='store', type='string',
+                      help='Path to shared folder on Windows guest')
+    parser.add_option('-o', '--hostpath', dest='host_base_path', action='store', type='string',
+                      help='Path to shared folder on host machine')
+    options, args = parser.parse_args()
+    if len(args) != 1:
+        parser.print_help()
+        sys.exit(1)
+    return options, args[0]
+
+
+if __name__ == '__main__':
+    opts, spn_file = extract_options()
+
+    executor = VBoxExecute(opts.vm_name, opts.win_user, opts.win_pw)
+    win_file_path = unix_to_win_path(spn_file, opts.host_base_path, opts.win_base_path)
+    executor.execute(opts.autoit_exec, [opts.autoit_script, win_file_path])

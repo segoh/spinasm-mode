@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+
+import sys
+
+def read(filename):
+    data = []
+    with open(filename, 'rb') as f:
+        byte = f.read(1)
+        while byte:
+            data.append(byte)
+            byte = f.read(1)
+    return ''.join(data)
+
+def write(data, filename):
+    with open(filename, 'wb') as f:
+        for b in data:
+            f.write(b)
+
+def is_spn(data):
+    return '\x00' in data
+
+def remove_delimiter(data):
+    return filter(lambda x: x != '\x00', data)
+
+def add_delimiter(data):
+    delimited_data = []
+    for d in data:
+        delimited_data.append(d)
+        delimited_data.append('\x00')
+    return ''.join(delimited_data)
+
+def unix_to_dos(data):
+    isUnix = ('\n' in data) and not ('\r\n' in data)
+    if isUnix:
+        return data.replace('\n', '\r\n')
+    return data
+
+def new_filename(filename):
+    suffix = 'asm' if filename.endswith('spn') else 'spn'
+    return filename[0:-3] + suffix
+
+def usage():
+    print "Usage:"
+    print "  Extract text  : %s file.spn" % __file__
+    print "  Convert to spn: %s file.asm" % __file__
+    sys.exit(0)
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        usage()
+    filename = sys.argv[1]
+    data = read(filename)
+    if is_spn(data):
+        write(remove_delimiter(data), new_filename(filename))
+    else:
+        write(add_delimiter(unix_to_dos(data)), new_filename(filename))
