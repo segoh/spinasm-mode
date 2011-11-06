@@ -33,7 +33,7 @@
 ;;    (add-to-list 'auto-mode-alist '("\\.spn$" . spinasm-mode))
 ;;
 ;; NOTE: Remember to change `spinasm-conv-program' and
-;; `spinasm-assemble-program'.
+;; `spinasm-assemble-program' with its options `spinasm-assemble-options'.
 
 ;;; Code:
 
@@ -113,7 +113,31 @@
 (define-derived-mode spinasm-mode
   asm-mode
   "SpinAsm"
-  "Major mode for editing SpinAsm code."
+  "\\<spinasm-mode-map>
+A mode for editing SpinAsm code.
+
+This mode uses two external tools:
+
+`spinasm-conv-program' to convert an ASCII file with .asm suffix
+into the format written by the SpinSemi IDE with .spn suffix.
+
+`spinasm-assemble-program' to assemble the resulting .spn file
+with SpinAsm IDE running in a VirtualBox Windows guest machine.
+Besides a working VirtualBox Windows guest you need a shared
+folder between host and guest and
+AutoIt (http://www.autoitscript.com/) installed on the guest.
+Command line parameters for `spinasm-assemble-program' that
+define the VirtualBox virtual machine name, shared folder path,
+path to AutoIt script etc. are defined by
+`spinasm-assemble-options'.
+
+\\[spinasm-conv-buffer] converts a .asm ASCII file into a SpinAsm
+.spn file and vice versa.
+
+\\[spinasm-assemble-buffer] triggers the .asm to .spn
+conversion (if required) and assembles the resulting .spn file on
+the Windows VirtualBox guest.
+"
   (setq font-lock-defaults '(spinasm-font-lock-defaults)))
 
 ;; Key bindings
