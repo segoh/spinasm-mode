@@ -9,7 +9,7 @@
 #ce ----------------------------------------------------------------------------
 
 #CS
-NOTE: Change the following variables to fit your system and language
+NOTE: Change the following variables according to your system and language.
 #CE
 Dim $spinasm_exe = "C:\Programme\SpinAsm IDE\SpinAsm.exe"
 Dim $open_window_title = "Öffnen"
