@@ -48,8 +48,7 @@
   :group 'spinasm)
 
 (defcustom spinasm-assemble-program "spnasm"
-  "The program to assemble a file. Its options are defined in
-`spinasm-assemble-arguments'."
+  "The program to assemble a file.  Its options are defined in `spinasm-assemble-arguments'."
   :type 'string
   :group 'spinasm)
 
