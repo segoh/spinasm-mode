@@ -22,8 +22,7 @@ guest machine.
 
 ## Installation
 
-The following instructions assume that are familiar with configuring
-Emacs and working with VirtualBox.
+The following instructions assume that you are familiar with Emacs and VirtualBox.
 
 Put this folder in your Emacs' load-path and add this to your .emacs file:
 
