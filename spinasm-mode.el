@@ -91,12 +91,12 @@
 (defvar spinasm-reserved-names
   '("run" "zrc" "zro" "gez" "neg" "sin" "cos" "reg" "compc" "compa"
     "rptr2" "na" "sin0_rate" "sin0_range" "sin1_rate" "sin1_range"
-    "rmp0_rate" "ramp0_range" "pot0" "pot1" "pot2" "adcl" "adcr"
-    "dacl" "dacr" "addr_ptr" "reg0" "reg1" "reg2" "reg3" "reg4"
-    "reg5" "reg6" "reg7" "reg8" "reg9" "reg10" "reg11" "reg12"
-    "reg13" "reg14" "reg15" "reg16" "reg17" "reg18" "reg19" "reg20"
-    "reg21" "reg22" "reg23" "reg24" "reg25" "reg26" "reg27" "reg28"
-    "reg29" "reg30" "reg31")
+    "rmp0_rate" "ramp0_range" "rmp1_rate" "ramp1_range" "pot0" "pot1"
+    "pot2" "adcl" "adcr" "dacl" "dacr" "addr_ptr" "reg0" "reg1" "reg2"
+    "reg3" "reg4" "reg5" "reg6" "reg7" "reg8" "reg9" "reg10" "reg11"
+    "reg12" "reg13" "reg14" "reg15" "reg16" "reg17" "reg18" "reg19"
+    "reg20" "reg21" "reg22" "reg23" "reg24" "reg25" "reg26" "reg27"
+    "reg28" "reg29" "reg30" "reg31")
   "SpinAsm reserved names.")
 
 (defconst spinasm-font-lock-defaults
